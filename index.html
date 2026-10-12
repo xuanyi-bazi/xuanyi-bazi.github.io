@@ -287,6 +287,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.9}
 .yl .n{width:70px;font-size:13px;color:var(--ink-2)}
 .yl .t{flex:1;font-weight:700}
 .yl .z{font-size:13px;color:var(--ink-2)}
+.yl select{width:auto;flex:none;padding:4px 6px;font-size:13px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);outline:none;font-family:var(--font)}
 .yl.mov{background:#f4efe2}
 
 /* 类象表 */
@@ -5593,11 +5594,18 @@ function setLyMode(m){ly_mode=m;
   if(m==="coins")buildManual();
 }
 function buildManual(){ly_vals=Array(6).fill(null);let h="";
-  for(let i=0;i<6;i++)h+="<div class='yl' id='lyrow"+i+"'><span class='n'>"+POSN[i]+"</span><span class='t'>未摇</span><span class='z'></span><button class='btn sm' onclick='throwCoin("+i+")'>掷</button></div>";
+  for(let i=0;i<6;i++)h+="<div class='yl' id='lyrow"+i+"'><span class='n'>"+POSN[i]+"</span><span class='t'>未摇</span><span class='z'></span><button class='btn sm' onclick='throwCoin("+i+")'>掷</button><select onchange='setCoinManual("+i+",this.value)'><option value=''>手动选</option><option value='7'>少阳 -</option><option value='8'>少阴 - -</option><option value='9'>老阳 0</option><option value='6'>老阴 - - x</option></select></div>";
   $("ly_coinsBox").innerHTML=h;}
-function throwCoin(i){const v=coin();ly_vals[i]=v;const row=$("lyrow"+i);const yang=(v%2===1),old=(v===6||v===9);
-  row.querySelector(".t").innerHTML=(yang?"⚊":"☍")+" "+lvName(v)+(old?"（动）":"");
-  row.querySelector(".z").textContent=yang?"阳":"阴";
+function setLyRow(row,v){const yang=(v%2===1),old=(v===6||v===9);
+  const sym=v===7?"-":v===8?"- -":v===9?"0":"- - x";
+  row.querySelector(".t").innerHTML=sym+" "+lvName(v)+(old?"（动）":"");
+  row.querySelector(".z").textContent=yang?"阳":"阴";}
+function throwCoin(i){const v=coin();ly_vals[i]=v;ly_src="铜钱摇卦 · 逐爻手掷";setLyRow($("lyrow"+i),v);
+  if(ly_vals.every(x=>x!==null))lySolve();}
+function setCoinManual(i,v){
+  const row=$("lyrow"+i);
+  if(!v){ly_vals[i]=null;row.querySelector(".t").innerHTML="未摇";row.querySelector(".z").textContent="";return;}
+  ly_src="铜钱摇卦 · 手动选爻";ly_vals[i]=+v;setLyRow(row,+v);
   if(ly_vals.every(x=>x!==null))lySolve();}
 function lyCoinsAuto(){ly_vals=[coin(),coin(),coin(),coin(),coin(),coin()];ly_src="铜钱摇卦 · 自动";lySolve();}
 function lyTime(){
