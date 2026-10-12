@@ -3463,6 +3463,45 @@ const USES={
  学业:{main:"父母",aux:"官鬼",desc:"以父母为用（文章、功名），官鬼为贵气考试关"},
  出行:{main:"子孙",aux:"官鬼",desc:"以世爻为行人身，子孙为顺利，官鬼为道路险阻"},
  其他:{main:"世爻",aux:"应爻",desc:"以世爻为己、应爻为彼，观其旺衰生克"}};
+const QIN_MEAN={
+ "父母":"房子、租房、合同、文件、证件、长辈、车票、快递、压力、操心",
+ "官鬼":"工作、领导、老板、官司、吵架、生病、麻烦、小人、压力、噩梦",
+ "妻财":"钱、工资、存款、生意、货物、女人、花销、收益",
+ "子孙":"孩子、下属、开心、解药、消灾、吃喝玩乐、克制烂工作烂麻烦",
+ "兄弟":"朋友、同事、竞争者、分钱、抢资源、破财、吵架、互相拉扯",
+ "世爻":"你自己：求卦的人、你的心态、你的实力",
+ "应爻":"对方：这件事、环境、别人、外面的情况"};
+const SIX_MEAN={
+ "青龙":"好事、顺利、喜庆、正规、干净、好人",
+ "朱雀":"吵架、口舌、聊天、消息、谣言、合同纠纷、上火",
+ "勾陈":"拖拉、磨蹭、纠结、不动、老旧、纠缠不清",
+ "螣蛇":"胡思乱想、焦虑、疑神疑鬼、小事放大、套路",
+ "白虎":"受伤、生病、破财、凶事、硬冲突、手术、磕碰",
+ "玄武":"隐瞒、撒谎、猫腻、暗地操作、被骗、暧昧、见不得光"};
+const CS_TABLE={0:[[11,"长生"],[0,"沐浴"],[1,"冠带"],[2,"临官"],[3,"帝旺"],[4,"衰"],[5,"病"],[6,"死"],[7,"墓"],[8,"绝"],[9,"胎"],[10,"养"]],
+ 1:[[2,"长生"],[3,"沐浴"],[4,"冠带"],[5,"临官"],[6,"帝旺"],[7,"衰"],[8,"病"],[9,"死"],[10,"墓"],[11,"绝"],[0,"胎"],[1,"养"]],
+ 2:[[8,"长生"],[9,"沐浴"],[10,"冠带"],[11,"临官"],[0,"帝旺"],[1,"衰"],[2,"病"],[3,"死"],[4,"墓"],[5,"绝"],[6,"胎"],[7,"养"]],
+ 3:[[5,"长生"],[6,"沐浴"],[7,"冠带"],[8,"临官"],[9,"帝旺"],[10,"衰"],[11,"病"],[0,"死"],[1,"墓"],[2,"绝"],[3,"胎"],[4,"养"]],
+ 4:[[8,"长生"],[9,"沐浴"],[10,"冠带"],[11,"临官"],[0,"帝旺"],[1,"衰"],[2,"病"],[3,"死"],[4,"墓"],[5,"绝"],[6,"胎"],[7,"养"]]};
+const CS_MEAN={
+ "长生":"起始、有根、得助力、运势渐起",
+ "沐浴":"桃花、口舌、是非、损耗、易有杂念",
+ "冠带":"体面、竞争、筹备、注重外表与名声",
+ "临官":"力量厚实、行事顺利、可得帮扶、不放手",
+ "帝旺":"力量顶点、强势、固执、事成概率高；过旺也易招是非",
+ "衰":"气场下滑、精力减退、事情慢慢乏力",
+ "病":"隐患、病痛、漏洞、心神不宁、诸事有牵绊",
+ "死":"气数衰败、停滞不前、难有转机",
+ "墓":"入库、隐藏、被困、沉寂、静而不动",
+ "绝":"气尽无根、极度衰弱、无力作为",
+ "胎":"暗中酝酿、刚有苗头、力量微弱",
+ "养":"积蓄力量、暗中培养、待时而动"};
+const LIU_HE=[[0,1],[2,11],[3,10],[4,9],[5,8],[6,7]];
+const LIU_CHONG=[[0,6],[1,7],[2,8],[3,9],[4,10],[5,11]];
+const LIU_HAI=[[0,7],[1,6],[2,5],[3,4],[8,11],[9,10]];
+const XING_TABLE=[["无恩之刑","寅巳申",[2,5,8],"忘恩负义、翻脸无情、合作反目"],["恃势之刑","丑未戌",[1,7,10],"仗势欺人、争斗争夺、家产纠纷"],["无礼之刑","子卯",[0,3],"不懂礼数、口舌争吵、长辈不和"],["自刑","辰午酉亥",[4,6,9,11],"自己跟自己过不去、胡思乱想、内耗、失眠自责"]];
+function zhiRel(a,b){return {he:LIU_HE.some(p=>p.includes(a)&&p.includes(b)),chong:LIU_CHONG.some(p=>p.includes(a)&&p.includes(b)),hai:LIU_HAI.some(p=>p.includes(a)&&p.includes(b))};}
+function csName(el,zhi){const row=CS_TABLE[el];if(!row)return "";for(const z of row){if(z[0]===zhi)return z[1];}return "";}
 const GONG_TABLE=[["乾宫","金",["乾","姤","遁","否","观","剥","晋","大有"]],["兑宫","金",["兑","困","萃","咸","蹇","谦","小过","归妹"]],["离宫","火",["离","旅","鼎","未济","蒙","涣","讼","同人"]],["震宫","木",["震","豫","解","恒","升","井","大过","随"]],["巽宫","木",["巽","小畜","家人","益","无妄","噬嗑","颐","蛊"]],["坎宫","水",["坎","节","屯","既济","革","丰","明夷","师"]],["艮宫","土",["艮","贲","大畜","损","睽","履","中孚","渐"]],["坤宫","土",["坤","复","临","泰","大壮","夬","需","比"]]];
 function liuGong(name){for(const g of GONG_TABLE){if(g[2].includes(name))return g[0];}return "—";}
 const GONG_EL_IDX={乾宫:3,兑宫:3,离宫:1,震宫:0,巽宫:0,坎宫:4,艮宫:2,坤宫:2};
@@ -3529,7 +3568,7 @@ function lyAnalyzeHTML(vals,src,topic,ask){
   for(let k=5;k>=0;k--){const r=rows[k];const el=EL_NAME[r.bEl];
     h+="<div class='lytr'><span>"+POSN[r.i]+(r.old?" <b class='mark-i'>动</b>":"")+"</span>"
       +"<span>"+(r.shi?"<b style='color:#b0402f'>世</b>":r.ying?"<b style='color:#4a7a5a'>应</b>":"")+"</span>"
-      +"<span>"+(r.yang?"⚊":"☍")+" "+(r.v===6?"老阴×":r.v===9?"老阳○":r.v===8?"少阴":"少阳")+"</span>"
+      +"<span>"+(r.v===7?"-":r.v===8?"- -":r.v===9?"0":"- - x")+" "+(r.v===6?"老阴·动":r.v===9?"老阳·动":r.v===8?"少阴":"少阳")+"</span>"
       +"<span>"+r.six+"</span>"
       +"<span>"+najGan(r)+ZHI[r.naj]+"</span>"
       +"<span>"+EL_NAME[r.bEl]+"</span>"
@@ -3543,7 +3582,7 @@ function lyAnalyzeHTML(vals,src,topic,ask){
     for(let k=5;k>=0;k--){const r=bRows[k];const isD=dongIndex.indexOf(r.i)>=0;const src=rows[r.i];
       h+="<div class='lytr'><span>"+POSN[r.i]+(isD?" <b class='mark-i'>变</b>":"")+"</span>"
         +"<span>"+(isD?(src.shi?"<b style='color:#b0402f'>世</b>":src.ying?"<b style='color:#4a7a5a'>应</b>":""):"")+"</span>"
-        +"<span>"+(r.yang?"⚊":"☍")+"</span>"
+        +"<span>"+(r.v===7?"-":r.v===8?"- -":r.v===9?"0":"- - x")+"</span>"
         +"<span>"+(isD?src.six:"")+"</span>"
         +"<span>"+najGan(r)+ZHI[r.naj]+"</span>"
         +"<span>"+EL_NAME[r.bEl]+"</span>"
@@ -3552,19 +3591,18 @@ function lyAnalyzeHTML(vals,src,topic,ask){
     h+="</div>";
   }
   h+="<div class='sec-label'>三、解读内容</div>";
+  h+=lyQinBlock(rows,gidx2);
+  h+=lySixBlock(rows,ds);
   h+="<div class='sec-label'>卦辞</div><div class='pg'>【"+g.title+"】"+g.name+"卦<br>卦辞："+g.guaci+"<br>白话解："+g.duan+"</div>";
-  h+=lyUseSel(rows,dongIndex,g,bg,mEl,dEl,mbIdx,topic);
-  h+="<div class='sec-label'>动爻爻辞（据《周易》）</div>";
-  if(dongIndex.length){
-    h+="<div class='pg'>";
-    dongIndex.forEach(di=>{const yc=(YAOCIT[g.name]&&YAOCIT[g.name][di])||"";
-      h+="<div style='margin-top:5px'><b>"+POSN[di]+"动：</b>爻辞“"+yc+"”。<br>白话点解："+YAO_ADV[di]+"</div>";});
-    h+="<div style='margin-top:6px'>本卦"+g.name+"动而化入"+bg.name+"（"+bg.title+"），主事由"+g.name+"之象转入"+bg.name+"之象。</div></div>";
-  }else{h+="<div class='pg'>六爻皆静，事不涉变："+g.duan+"</div>";}
-  h+="<div class='tip'>月建代表当下的时令气数，日辰为当日之应期；用神得月日之气则有力，受克则须待制克之神。以上属传统占断，供研究娱乐参考。</div>";
+  h+=lyUseSel(rows,dongIndex,g,bg,mEl,dEl,mbIdx,topic,xunKong,bRows);
+  h+=lyDongBlock(rows,bRows,dongIndex,g,bg);
+  h+=lyShiYingBlock(rows);
+  h+=lyZhiBlock(rows,dongIndex,mEl,dEl);
+  h+=lySixPairBlock(rows);
+  h+="<div class='tip'>以上对应《六爻起卦》《六爻全套断卦》两谱之法：先看自己世爻旺不旺，再找用神定方向，日月打底分强弱，动爻变化定下场；相冲不合容易散，相合纠缠事绵长，空亡拖延没消息，白虎见凶朱雀嚷，回头生助慢慢好，回头相克必受伤。属传统民俗占断，供研究娱乐参考，不构成现实决策依据。</div>";
   return h;
 }
-function lyUseSel(rows,dongIndex,g,bg,mEl,dEl,mbIdx,topic){
+function lyUseSel(rows,dongIndex,g,bg,mEl,dEl,mbIdx,topic,xunKong,bRows){
   const use=USES[topic]||USES["其他"];let yao=null,qin=use.main;
   if(use.main==="世爻"){yao=rows.find(r=>r.shi);qin="世爻";}
   else if(use.main==="应爻"){yao=rows.find(r=>r.ying);qin="应爻";}
@@ -3575,26 +3613,184 @@ function lyUseSel(rows,dongIndex,g,bg,mEl,dEl,mbIdx,topic){
     s+="此卦<b>"+qin+"</b>不上卦（伏藏，按纳甲法伏于本宫八纯之卦同位之下）"+(topic==="感情"?"情缘多有隐藏难察、对方心意未明，须待用神现于月日之时方有转机。" : "事机藏而未现、暂难见成，须待用神现于月日之时方有转机。")+"</div>";
     s+="<div style='margin:8px 0'><span class='jixiong jx-mid'>中平 · 事多迟滞</span></div>";
     return s;}
-  const ue=yao.bEl;let score=0;const notes=[];
-  if(mEl===ue){score+=2;notes.push("得月建之气（"+ZHI[mbIdx]+"当令）");}else if(SHENG[mEl]===ue){score+=1;notes.push("月建生扶");}else if(KE[mEl]===ue){score-=1;notes.push("月建克之");}
-  if(SHENG[dEl]===ue){score+=1;notes.push("日辰生扶");}else if(KE[dEl]===ue){score-=1;notes.push("日辰克之");}
+  const ue=yao.bEl;let score=0;const notes=[],bads=[];
+  if(mEl===ue){score+=2;notes.push("月建同气（"+ZHI[mbIdx]+"当令）→ 旺，底气足、事事顺");}
+  else if(SHENG[mEl]===ue){score+=1;notes.push("月建生扶 → 相，次强有助力");}
+  else if(SHENG[ue]===mEl){score-=1;notes.push("用神生月建 → 休，泄气平淡、没劲头");}
+  else if(KE[mEl]===ue){score-=1;notes.push("月建克之 → 囚，被压制、处处受限");}
+  else if(KE[ue]===mEl){score-=2;notes.push("用神克月建 → 死，最弱无气、难动");}
+  if(SHENG[dEl]===ue){score+=1;notes.push("日辰生扶 → 得日生，加分有力");}
+  else if(dEl===ue){score+=1;notes.push("日辰同气 → 得日助，加分有力");}
+  else if(SHENG[ue]===dEl){score-=1;notes.push("用神生日辰 → 泄气减分、无力");}
+  else if(KE[dEl]===ue){score-=1;notes.push("日辰克之 → 减分、无力");}
+  if(LIU_CHONG.some(p=>p.includes(yao.naj)&&p.includes(mbIdx))){score-=2;bads.push("月破（"+ZHI[mbIdx]+"月冲"+ZHI[yao.naj]+"）：元气大伤、半路作废");}
+  if(LIU_CHONG.some(p=>p.includes(yao.naj)&&p.includes(dEl))){score-=2;bads.push("日破（日辰"+ZHI[dEl]+"冲"+ZHI[yao.naj]+"）：被冲散、直接办不成");}
+  if(yao.kong){score-=2;bads.push("旬空（"+ZHI[yao.naj]+"落空亡）：这几天没力气、不算数、拖延办不成，等出空才生效");}
   if(yao.old){score+=1;notes.push("用神发动，主事有行动与改变");}
+  const shengMe=dongIndex.some(di=>rows[di].i!==yao.i&&SHENG[rows[di].bEl]===ue);
   const keMe=dongIndex.some(di=>rows[di].i!==yao.i&&KE[rows[di].bEl]===ue);
-  if(keMe){score-=1;notes.push("被其它动爻克制");}
-  s+="用神取<b>"+qin+"</b>（"+POSN[yao.i]+"，"+ZHI[yao.naj]+"，五行属"+EL_NAME[ue]+"）："+notes.join("；")+"。";
-  if(score>=3)s+="<span class='jixiong jx-good'>旺相得力，此问多吉，可期事成</span>。";
-  else if(score===2)s+="<span class='jixiong jx-good'>较旺，主大体顺利</span>。";
-  else if(score>=0)s+="<span class='jixiong jx-mid'>平平，成败一半，须努力</span>。";
-  else s+="<span class='jixiong jx-bad'>休囚受制，此问多阻，宜缓不宜急</span>。";
+  if(shengMe){score+=1;notes.push("有动爻生用神 → 有人帮你、有贵人、事情推着你成");}
+  if(keMe){score-=1;notes.push("有动爻克用神 → 有人坑你、有阻碍、半路出事");}
+  if(dongIndex.indexOf(yao.i)>=0&&bRows&&bRows[yao.i]){
+    const bv=bRows[yao.i];
+    if(SHENG[bv.bEl]===ue){score+=1;notes.push("用神化回头生 → 越变越好、后劲足、结局不错");}
+    else if(KE[bv.bEl]===ue){score-=2;notes.push("用神化回头克 → 越变越差、半路翻车、开始好后头烂");}
+  }
+  const cs=csName(ue,dEl);
+  s+="用神取<b>"+qin+"</b>（"+POSN[yao.i]+"，纳甲"+ZHI[yao.naj]+"，五行属"+EL_NAME[ue]+"）："+notes.join("；")+"。";
+  if(cs)s+="<br>按日辰十二长生，用神处<b>"+cs+"</b>之位——"+CS_MEAN[cs]+"。";
+  if(bads.length)s+="<br><span style='color:#b0402f'>凶兆："+bads.join("；")+"。</span>";
+  if(score>=4)s+="<span class='jixiong jx-good'>大吉 · 用神旺相得力，此问可期事成</span>。";
+  else if(score>=2)s+="<span class='jixiong jx-good'>吉 · 用神较旺，大体顺利</span>。";
+  else if(score>=0)s+="<span class='jixiong jx-mid'>平平淡淡 · 不旺不弱，成败一半，须努力</span>。";
+  else s+="<span class='jixiong jx-bad'>偏凶 · 用神休囚受制，此问多阻，宜缓不宜急</span>。";
   let cheng;
-  if(score>=3)cheng="用神旺相得力，大方向能成，宜主动推进；应期较快，约近旬（十日）内见端倪，逢"+EL_NAME[dEl]+"之日更验。";
-  else if(score===2)cheng="大体可成、把握较大；应期中速，约半月到一月间见分晓。";
+  if(bads.length)cheng="用神逢"+bads[0].split("（")[0]+"，当下无气难成：空亡待出空之日、月破待月气转换、日破待日辰过去，硬催反招损。此问宜缓办，待用神复旺再图。";
+  else if(score>=4)cheng="用神旺相得力，大方向能成，宜主动推进；应期较快，约近旬（十日）内见端倪，逢"+EL_NAME[dEl]+"之日更验。";
+  else if(score>=2)cheng="大体可成、把握较大；应期中速，约半月到一月间见分晓。";
   else if(score>=0)cheng="成败各半、属事在人为——成不成一半看时机、一半看努力；约一到三月内见端倪，逢月日生扶用神之时更有利，切莫半途而废。";
   else cheng="眼下用神受制休囚，急于强求反易生变；此时宜缓议、蓄势待时，待月气或日辰转旺用神再谈，成在“等”字而非硬攻。";
+  const yq=lyYingQi(rows,yao,dongIndex,g,mEl,dEl,xunKong,score,bads.length);
+  s+="<div class='sec-label'>这件事能不能成 · 几时成</div><div class='pg'>"+cheng+(yq?"<br><b>应期参考：</b>"+yq:"")+"</div>";
   const keLine=(topic==="感情")?(score>=0?"两心若有真意、不耍心计，事可推进；可若只剩客套试探，那就是在拖，拖久了自然凉。合不来看准时机走开，比耗着强。":"“对方没表态”是客气的说法，说白了就是人家没把你排在优先里。这会儿越追越掉价，先冷一冷、把心思收回来，看清谁值得再动，别自我感动、别死缠烂打。"):(use.main==="世爻"?"这事全在你肯不肯动：动则有人应、拖则机会溜。最怕你想办又怕丢面子，端着端着就黄了，逼自己一把。":(topic==="事业"?"这事看职位文书和资质：占理、资历硬，才有贵人递台阶；你要是押在关系、空话和侥幸上，多半扑空，别把命脉放别人嘴里。":(topic==="财运"?"钱到手才算数：合同没落笔、钱没进账，都当还没有。贪快、追涨、听人吹，最容易得而复失；落袋为安，别替套牢留后门。":(topic==="健康"?"此问看医药子孙得不得力：得旺就老实遵医嘱、按疗程吃药，能好；别扭着不去看、硬扛，小病会拖成大病，别赌。":"事看机缘也看时就：顺就顺势而为，逆就慢半拍。硬赶硬催、强求一时，十有八九坏在急上。"))));
-  s+="<div class='sec-label'>这件事能不能成 · 几时成</div><div class='pg'>"+cheng+"</div>";
-  s+="<div class='sec-label'>注意事项</div><div class='pg' style='margin-bottom:6px'>"+keLine+"</div></div>";
+  s+="<div class='sec-label'>注意事项</div><div class='pg' style='margin-bottom:6px'>"+keLine+"</div>";
+  s+=lyKouJue(rows,dongIndex,yao,g,mEl,dEl,score);
+  s+="</div>";
   return s;
+}
+const JIN_TUI={0:[[2,3],[3,2]],1:[[5,6],[6,5]],3:[[8,9],[9,8]],4:[[11,0],[0,11]],2:[[1,4],[4,7],[7,10],[10,1]]};
+function jinTui(el,from,to){const t=JIN_TUI[el];if(!t)return "";for(const p of t[0]){if(p[0]===from&&p[1]===to)return "进";}for(const p of t[1]){if(p[0]===from&&p[1]===to)return "退";}return "";}
+function lyYingQi(rows,yao,dongIndex,g,mEl,dEl,xunKong,score,badCnt){
+  const POSN=["初爻","二爻","三爻","四爻","五爻","上爻"];
+  const list=[];
+  if(score>=4)list.push("用神旺相：逢<b>"+ZHI[yao.naj]+"</b>（"+EL_NAME[yao.bEl]+"五行）之日或当月最验");
+  if(yao.kong)list.push("用神空亡：等<b>填空</b>（"+ZHI[xunKong[0]]+"、"+ZHI[xunKong[1]]+"出现之日）或<b>冲空</b>（冲"+ZHI[xunKong[0]]+"、"+ZHI[xunKong[1]]+"之日）才有消息");
+  dongIndex.forEach(di=>{if(di!==yao.i)list.push("动爻发力：逢"+POSN[di]+"所纳<b>"+ZHI[rows[di].naj]+"</b>之日为应验参考");});
+  const uP=TG_PA[g.u],lP=TG_PA[g.l];
+  const shi=rows.find(r=>r.shi),ying=rows.find(r=>r.ying);
+  if(uP&&lP&&uP[0]!==lP[0]&&uP[1]!==lP[1]&&uP[2]!==lP[2])list.push("本卦六冲主散：待<b>合</b>住之日（世应或用神逢合）方能稳住落地");
+  else if(shi&&ying&&zhiRel(shi.naj,ying.naj).he)list.push("世应相合事绵长：待<b>冲</b>开之日（冲"+ZHI[shi.naj]+"或"+ZHI[ying.naj]+"之日）方见分晓");
+  if(score<4&&!yao.kong)list.push("缺啥补啥：用神偏弱就等月日生扶之时，偏旺就等用神纳甲值日");
+  return list.join("；");
+}
+function lyQinBlock(rows,gidx2){
+  const POSN=["初爻","二爻","三爻","四爻","五爻","上爻"];
+  const order=["父母","官鬼","妻财","子孙","兄弟"];
+  let s="<div class='sec-label'>六亲人事 · 这根爻在问什么</div><div class='tip'>六亲以本宫五行为“我”定名：生我者为父母、我生者为子孙、同我者为兄弟、我克者为妻财、克我者为官鬼。每根爻的六亲，就代表问的这类人事。</div><div class='pg'>";
+  order.forEach(q=>{s+="<b>"+q+"</b>＝"+QIN_MEAN[q]+"<br>";});
+  s+="</div><div class='lytab'><div class='lytr lyhead'><span>爻位</span><span>世应</span><span>六亲</span><span>管什么（人事）</span></div>";
+  for(let k=5;k>=0;k--){const r=rows[k];
+    s+="<div class='lytr'><span>"+POSN[r.i]+"</span><span>"+(r.shi?"<b style='color:#b0402f'>世</b>":r.ying?"<b style='color:#4a7a5a'>应</b>":"")+"</span><span>"+r.qin+"</span><span>"+(QIN_MEAN[r.qin]||"")+"</span></div>";}
+  s+="</div>";
+  if(gidx2===6)s+="<div class='pg'>本卦为<b>游魂卦</b>：主外出、动、散、变、游移、远行、不稳——事多游移难定，人心易散，忌一意孤行。</div>";
+  if(gidx2===7)s+="<div class='pg'>本卦为<b>归魂卦</b>：主内、静、聚、守、反复、回归、难动——事多恋栈反复，想走又走不开。</div>";
+  return s;
+}
+function lySixBlock(rows,ds){
+  const POSN=["初爻","二爻","三爻","四爻","五爻","上爻"];
+  let s="<div class='sec-label'>六神状态 · 这根爻带着什么情绪</div><div class='tip'>六神按当日天干起：甲乙日初爻起青龙、丙丁日起朱雀、戊日起勾陈、己日起螣蛇、庚辛日起白虎、壬癸日起玄武，依次顺排。它代表每根爻的“情绪色”与行事状态。</div><div class='pg'>";
+  SIXS.forEach((x)=>{s+="<b>"+x+"</b>＝"+SIX_MEAN[x]+"<br>";});
+  s+="</div><div class='lytab'><div class='lytr lyhead'><span>爻位</span><span>六神</span><span>状态含义</span></div>";
+  for(let k=5;k>=0;k--){const r=rows[k];
+    s+="<div class='lytr'><span>"+POSN[r.i]+"</span><span>"+r.six+"</span><span>"+(SIX_MEAN[r.six]||"")+"</span></div>";}
+  s+="</div><div class='tip'>今起卦日天干为<b>"+GAN[ds]+"</b>，故六神自<b>"+SIXS[SIX_START[ds]]+"</b>起于初爻。</div>";
+  return s;
+}
+function lyDongBlock(rows,bRows,dongIndex,g,bg){
+  const POSN=["初爻","二爻","三爻","四爻","五爻","上爻"];
+  let s="<div class='sec-label'>动爻与变卦（全局关键）</div>";
+  if(!dongIndex.length){s+="<div class='pg'>六爻皆静、事不涉变："+g.duan+"。静卦看用神旺衰定结果；动爻才是事情的变化与转折点——本卦无动，主事暂以现状论，难有突变。</div>";return s;}
+  s+="<div class='pg'>";
+  dongIndex.forEach(di=>{const yc=(YAOCIT[g.name]&&YAOCIT[g.name][di])||"";
+    const r=rows[di],bv=bRows[di];
+    s+="<div style='margin-top:5px'><b>"+POSN[di]+"动：</b>爻辞“"+yc+"”。<br>白话点解："+YAO_ADV[di];
+    if(bv&&bv.bEl!==r.bEl){
+      if(SHENG[bv.bEl]===r.bEl)s+="<br>化出<b>"+EL_NAME[bv.bEl]+"</b>（"+ZHI[bv.naj]+"）回头<b>生</b>原爻 → 越变越好、后劲足、结局不错。";
+      else if(KE[bv.bEl]===r.bEl)s+="<br>化出<b>"+EL_NAME[bv.bEl]+"</b>（"+ZHI[bv.naj]+"）回头<b>克</b>原爻 → 越变越差、半路翻车、开始好后头烂。";
+    }else if(bv&&bv.bEl===r.bEl){
+      const jt=jinTui(r.bEl,r.naj,bv.naj);
+      if(jt==="进")s+="<br>化<b>进神</b>（"+ZHI[r.naj]+"进"+ZHI[bv.naj]+"）→ 越来越强、局势往上走。";
+      else if(jt==="退")s+="<br>化<b>退神</b>（"+ZHI[r.naj]+"退至"+ZHI[bv.naj]+"）→ 越来越弱、慢慢没戏、冷淡。";
+    }
+    s+="</div>";});
+  s+="<div style='margin-top:6px'>本卦"+g.name+"动而化入"+bg.name+"（"+bg.title+"），主事由"+g.name+"之象转入"+bg.name+"之象。</div></div>";
+  return s;
+}
+function lyShiYingBlock(rows){
+  const shi=rows.find(r=>r.shi),ying=rows.find(r=>r.ying);
+  if(!shi||!ying)return "";
+  const a=shi.bEl,b=ying.bEl;
+  const zr=zhiRel(shi.naj,ying.naj);
+  let five="";
+  if(a===b)five="五行同气（同属"+EL_NAME[a]+"），底子相近、脾性相类";
+  else if(SHENG[b]===a)five="应爻"+EL_NAME[b]+"来生世爻"+EL_NAME[a]+"，对方/环境在助力你";
+  else if(SHENG[a]===b)five="世爻"+EL_NAME[a]+"去生应爻"+EL_NAME[b]+"，你在向对方/事情持续输出";
+  else if(KE[a]===b)five="世爻"+EL_NAME[a]+"克应爻"+EL_NAME[b]+"，你压得住对方/事情";
+  else if(KE[b]===a)five="应爻"+EL_NAME[b]+"克世爻"+EL_NAME[a]+"，对方/环境压着你";
+  let rel="";
+  if(zr.chong)rel="世应地支相冲（"+ZHI[shi.naj]+"冲"+ZHI[ying.naj]+"）：互相不对付、见面就顶、谈不拢，事情容易散。底子里"+five+"，但地支一冲，实质仍是拧着劲，别只看同气就放松警惕。";
+  else if(zr.he)rel="世应地支相合（"+ZHI[shi.naj]+"合"+ZHI[ying.naj]+"）：合拍、好沟通、容易成事。底子里"+five+"，合多也主纠缠拖沓、分不开。";
+  else if(zr.hai)rel="世应相害（"+ZHI[shi.naj]+"害"+ZHI[ying.naj]+"）：表面没事、暗地里有隔阂误会、背后使绊的迹象。底子里"+five+"，但暗害在底，面上再客气也别全信。";
+  else if(a===b)rel="世应比和：你与对方同气相求，不温不火，合得来但也没火花，事情按部就班。";
+  else if(SHENG[b]===a)rel="应生世：对方/环境在帮你、迁就你，你占便宜，事情对你有利，可借势推进。";
+  else if(SHENG[a]===b)rel="世生应：你主动付出、你迁就别人、你吃亏，多半是你单方面投入，先想清楚值不值。";
+  else if(KE[a]===b)rel="世克应：你压得住这事/对方，主动权在你，但别逼太紧、把人惹急了反噬。";
+  else if(KE[b]===a)rel="应克世：对方/环境压着你，矛盾多、谈不拢，硬碰容易吃亏，宜先缓一缓。";
+  return "<div class='sec-label'>世应关系 · 你与对方怎么处</div><div class='pg'>世爻＝"+QIN_MEAN["世爻"]+"；应爻＝"+QIN_MEAN["应爻"]+"。本卦世爻纳甲"+ZHI[shi.naj]+"（"+EL_NAME[a]+"）、应爻纳甲"+ZHI[ying.naj]+"（"+EL_NAME[b]+"）。"+rel+"</div>";
+}
+function lyZhiBlock(rows,dongIndex,mEl,dEl){
+  const POSN=["初爻","二爻","三爻","四爻","五爻","上爻"];
+  let s="<div class='sec-label'>合 · 冲 · 刑 · 害（关系暗线）</div>";
+  s+="<div class='pg'><b>六合</b>＝合在一起、稳定、谈得拢、能成、纠缠、分不开（宜合作、恋爱、谈事、签约）；"
+    +"<b>六冲</b>＝散开、吵架、分手、闹翻、变动、不稳定、事情容易黄（宜断关系、躲开麻烦）；"
+    +"<b>相刑</b>＝难受、内耗、憋屈、受伤、纠纷、互相折磨；"
+    +"<b>相害</b>＝隔阂、误会、背后捅刀、表面没事暗地里不舒服。</div>";
+  const hits=[];
+  const shi=rows.find(r=>r.shi),ying=rows.find(r=>r.ying);
+  dongIndex.forEach(di=>{const r=rows[di];
+    if(shi&&r.i!==shi.i){const zr=zhiRel(r.naj,shi.naj);if(zr.chong)hits.push(POSN[di]+"动爻"+ZHI[r.naj]+"冲世爻"+ZHI[shi.naj]+" → 冲自己：事有动荡、心绪不宁");if(zr.he)hits.push(POSN[di]+"动爻"+ZHI[r.naj]+"合世爻"+ZHI[shi.naj]+" → 合住自己：事情牵绊、难脱身");}
+    if(ying&&r.i!==ying.i){const zr2=zhiRel(r.naj,ying.naj);if(zr2.chong)hits.push(POSN[di]+"动爻"+ZHI[r.naj]+"冲应爻"+ZHI[ying.naj]+" → 冲散对方/事情：易散难聚");if(zr2.he)hits.push(POSN[di]+"动爻"+ZHI[r.naj]+"合应爻"+ZHI[ying.naj]+" → 合住对方/事情：拖沓难了结");}
+  });
+  const najs=rows.map(r=>r.naj);
+  XING_TABLE.forEach(x=>{const g2=x[2];const hit=najs.filter(n=>g2.includes(n));
+    if(hit.length>=2)hits.push(x[0]+"（"+hit.map(z=>ZHI[z]).join("、")+"刑）："+x[3]);});
+  if(hits.length)s+="<div class='pg'>"+hits.join("<br>")+"</div>";
+  else s+="<div class='pg'>盘面未见动爻冲合世应、未见成局之刑，人事关系以平顺为主，冲突暗昧不显。</div>";
+  return s;
+}
+function lySixPairBlock(rows){
+  const POSN=["初爻","二爻","三爻","四爻","五爻","上爻"];
+  const PAIRS=[
+   ["妻财","青龙","财+青龙＝正财、干净钱、正经收入"],
+   ["妻财","玄武","财+玄武＝暗钱、黑钱、被骗、私下借钱要不回"],
+   ["官鬼","白虎","官+白虎＝重病、手术、官司、严重麻烦"],
+   ["官鬼","朱雀","官+朱雀＝口舌是非、被骂、职场内斗"],
+   ["父母","勾陈","父母+勾陈＝房子老旧、手续拖拉、证件卡住"],
+   ["子孙","青龙","子孙+青龙＝治病见效、烦恼消失、自由舒服"]];
+  const found=[];
+  rows.forEach(r=>{PAIRS.forEach(p=>{if(r.qin===p[0]&&r.six===p[1])found.push(POSN[r.i]+"·"+p[2]);});});
+  let s="<div class='sec-label'>六神搭配 · 细节断事</div><div class='tip'>六亲定“问什么”，六神定“什么味”，两者一搭，细节就出来了。</div><div class='pg'>";
+  if(found.length)s+=found.join("<br>");
+  else s+="盘面无典型搭配（财遇青龙/玄武、官遇白虎/朱雀、父母遇勾陈、子孙遇青龙），按常规断法看用神旺衰与动变即可。";
+  s+="</div>";
+  return s;
+}
+function lyKouJue(rows,dongIndex,yao,g,mEl,dEl,score){
+  const POSN=["初爻","二爻","三爻","四爻","五爻","上爻"];
+  const shi=rows.find(r=>r.shi),ying=rows.find(r=>r.ying);
+  const parts=[];
+  if(shi){let st="平";if(mEl===shi.bEl||dEl===shi.bEl)st="旺";else if(SHENG[mEl]===shi.bEl||SHENG[dEl]===shi.bEl)st="相";else if(KE[mEl]===shi.bEl||KE[dEl]===shi.bEl)st="弱";else st="泄";
+    parts.push("先看自己：世爻"+POSN[shi.i]+"纳甲"+ZHI[shi.naj]+"（"+EL_NAME[shi.bEl]+"），受月日之气为“"+st+"”——"+(st==="旺"?"你自身底子足、扛得住事":st==="相"?"你还有余力、可得帮扶":st==="弱"?"你眼下气虚、容易扛不住":"你正在往外掏力气、易耗神"));}
+  parts.push("再找用神：取"+yao.qin+"（"+POSN[yao.i]+"）定方向，"+((score>=4)?"用神旺相、大方向能成":(score>=2)?"用神较旺、大体顺利":(score>=0)?"用神平平、成败各半":"用神休囚、此事多阻"));
+  if(dongIndex.length)parts.push("动爻"+dongIndex.map(d=>POSN[d]).join("、")+"发动，主事有转折变化");else parts.push("六爻皆静，主事按现状延续，难有突变");
+  if(shi&&ying){const zr=zhiRel(shi.naj,ying.naj);
+    if(zr.chong)parts.push("世应相冲，不合容易散");else if(zr.he)parts.push("世应相合，纠缠事绵长");else if(zr.hai)parts.push("世应相害，暗地有隔阂");else parts.push("世应无冲合，关系平顺");}
+  if(yao.kong)parts.push("用神落空亡，拖延没消息");
+  const bai=rows.find(r=>r.six==="白虎");
+  if(bai&&bai.qin==="官鬼")parts.push("官鬼临白虎，凶事伤病之象，谨慎为上");
+  const zhu=rows.find(r=>r.six==="朱雀");
+  if(zhu)parts.push("朱雀临"+POSN[zhu.i]+"，主口舌是非、消息传言");
+  return "<div class='sec-label'>一句话总评 · 万能断卦口诀</div><div class='pg'>"+parts.join("；")+"。</div>";
 }
 function lyBuildFromInts(a,b,total,src){const up=guaOfRemainder(a),lo=guaOfRemainder(b);const dong=total%6===0?5:total%6-1;const loP=TG_PA[lo],upP=TG_PA[up];const base=[loP[0],loP[1],loP[2],upP[0],upP[1],upP[2]];const vals=base.map(x=>x?7:8);vals[dong]=base[dong]?9:6;return {vals,src};}
 
